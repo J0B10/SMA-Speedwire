@@ -32,10 +32,10 @@ multicast forwarding enabled.
 Some cheap switches are also known to cause problems with multicast (like blocking random groups or not allowing it at all), 
 so make sure your hardware supports it.  
 
-I'd advise you to first test establishing a connection using the DeviceDiscovery sample.
+I would advise you to first test establishing a connection using the [DeviceDiscovery](samples/src/DeviceDiscovery.java) sample.
 
 ## Usage
-Reading incoming data from an SMA Energy Meter:  
+Reading incoming data from an SMA Energy Meter / SMA Sunny Home Manager:  
 
 ```java
         Speedwire speedwire = new Speedwire();
