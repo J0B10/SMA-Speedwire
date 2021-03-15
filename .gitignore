@@ -1,3 +1,17 @@
+# Intellij Project Files
 *.iml
 /.idea/
+
+# Maven output files
 /target/
+
+# Sample build files
+**/out/*/samples/
+
+# Wireshark packet captures
+*.pcap
+*.pcapng
+*.eth
+
+# SMA technical documents
+/sma-docs/
