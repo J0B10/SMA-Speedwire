@@ -1,4 +1,4 @@
-package de.ungefroren.sma.speedwire.protocol.measuringChannels;
+package io.github.joblo2213.sma.speedwire.protocol.measuringChannels;
 
 
 import tech.units.indriya.AbstractUnit;

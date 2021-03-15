@@ -1,4 +1,4 @@
-package de.ungefroren.sma.speedwire.protocol;
+package io.github.joblo2213.sma.speedwire.protocol;
 
 import java.util.Objects;
 

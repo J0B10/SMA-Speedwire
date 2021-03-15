@@ -1,6 +1,6 @@
-package de.ungefroren.sma.speedwire.protocol.telegrams;
+package io.github.joblo2213.sma.speedwire.protocol.telegrams;
 
-import de.ungefroren.sma.speedwire.protocol.InvalidTelegramException;
+import io.github.joblo2213.sma.speedwire.protocol.InvalidTelegramException;
 
 import java.math.BigInteger;
 import java.net.DatagramPacket;

@@ -1,9 +1,9 @@
-package de.ungefroren.sma.speedwire.protocol.telegrams;
+package io.github.joblo2213.sma.speedwire.protocol.telegrams;
 
-import de.ungefroren.sma.speedwire.protocol.InvalidTelegramException;
-import de.ungefroren.sma.speedwire.protocol.OBISIdentifier;
-import de.ungefroren.sma.speedwire.protocol.measuringChannels.EnergyMeterChannels;
-import de.ungefroren.sma.speedwire.protocol.measuringChannels.MeasuringChannel;
+import io.github.joblo2213.sma.speedwire.protocol.InvalidTelegramException;
+import io.github.joblo2213.sma.speedwire.protocol.OBISIdentifier;
+import io.github.joblo2213.sma.speedwire.protocol.measuringChannels.EnergyMeterChannels;
+import io.github.joblo2213.sma.speedwire.protocol.measuringChannels.MeasuringChannel;
 import tech.units.indriya.quantity.Quantities;
 
 import javax.measure.Quantity;
@@ -11,9 +11,6 @@ import javax.measure.quantity.Time;
 import java.math.BigInteger;
 import java.net.InetAddress;
 import java.util.HashMap;
-
-import static de.ungefroren.sma.speedwire.protocol.measuringChannels.EnergyMeterChannels.ALL;
-import static de.ungefroren.sma.speedwire.protocol.measuringChannels.EnergyMeterChannels.UNIT_TIME;
 
 /**
  * A telegram from an SMA Energy Meter or an SMA Sunny Home Manager (2.0)
@@ -31,7 +28,7 @@ public class EnergyMeterTelegram extends Telegram {
         try {
             SUSyID = get2ByteUnsignedInt(18);
             serNo = get4ByteUnsignedInt(20);
-            measuringTime = Quantities.getQuantity(get4ByteUnsignedInt(24), UNIT_TIME);
+            measuringTime = Quantities.getQuantity(get4ByteUnsignedInt(24), EnergyMeterChannels.UNIT_TIME);
 
             measuredData = new HashMap<>();
             loadMeasurements(28, length() - 4);
@@ -88,7 +85,7 @@ public class EnergyMeterTelegram extends Telegram {
             offset += 4 + identifier.getDataLength();
         }
 
-        for (MeasuringChannel<?> channel : ALL) {
+        for (MeasuringChannel<?> channel : EnergyMeterChannels.ALL) {
             if (!measuredData.containsKey(channel.getIdentifier())) {
                 //log all missing channels
                 System.err.println("telegram missing channel: " + channel.getIdentifier());

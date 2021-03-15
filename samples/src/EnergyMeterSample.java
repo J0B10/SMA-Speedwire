@@ -1,6 +1,6 @@
-import de.ungefroren.sma.speedwire.Speedwire;
-import de.ungefroren.sma.speedwire.protocol.measuringChannels.EnergyMeterChannels;
-import de.ungefroren.sma.speedwire.protocol.telegrams.EnergyMeterTelegram;
+import io.github.joblo2213.sma.speedwire.Speedwire;
+import io.github.joblo2213.sma.speedwire.protocol.measuringChannels.EnergyMeterChannels;
+import io.github.joblo2213.sma.speedwire.protocol.telegrams.EnergyMeterTelegram;
 import tech.units.indriya.unit.Units;
 
 import javax.measure.MetricPrefix;

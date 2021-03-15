@@ -1,6 +1,6 @@
-package de.ungefroren.sma.speedwire.protocol.measuringChannels;
+package io.github.joblo2213.sma.speedwire.protocol.measuringChannels;
 
-import de.ungefroren.sma.speedwire.protocol.OBISIdentifier;
+import io.github.joblo2213.sma.speedwire.protocol.OBISIdentifier;
 
 import javax.measure.Quantity;
 import javax.measure.Unit;

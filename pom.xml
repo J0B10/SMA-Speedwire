@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.ungefroren</groupId>
+    <groupId>io.github.joblo2213</groupId>
     <artifactId>sma.speedwire</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <name>SMA-Speedwire</name>
+    <description>SMA-Speedwire is an api for communicating with SMA products over Ethernet using the speedwire
+        interface.
+        It allows listening for exchanged data between your devices and logging meter readings.
+    </description>
+    <url>https://github.com/joblo2213/SMA-Speedwire</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://github.com/joblo2213/SMA-Speedwire/blob/master/LICENSE</url>
+        </license>
+    </licenses>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

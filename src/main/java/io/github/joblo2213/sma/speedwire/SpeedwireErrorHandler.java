@@ -1,6 +1,6 @@
-package de.ungefroren.sma.speedwire;
+package io.github.joblo2213.sma.speedwire;
 
-import de.ungefroren.sma.speedwire.protocol.InvalidTelegramException;
+import io.github.joblo2213.sma.speedwire.protocol.InvalidTelegramException;
 
 import java.io.IOException;
 import java.net.PortUnreachableException;

@@ -1,7 +1,7 @@
-package de.ungefroren.sma.speedwire;
+package io.github.joblo2213.sma.speedwire;
 
-import de.ungefroren.sma.speedwire.protocol.telegrams.DiscoveryResponse;
-import de.ungefroren.sma.speedwire.protocol.telegrams.Telegram;
+import io.github.joblo2213.sma.speedwire.protocol.telegrams.DiscoveryResponse;
+import io.github.joblo2213.sma.speedwire.protocol.telegrams.Telegram;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
