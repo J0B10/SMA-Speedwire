@@ -22,6 +22,12 @@
         </license>
     </licenses>
 
+    <scm>
+        <connection>scm:git:git://github.com/joblo2213/SMA-Speedwire.git</connection>
+        <developerConnection>scm:git:ssh://github.com:joblo2213/SMA-Speedwire.git</developerConnection>
+        <url>https://github.com/joblo2213/SMA-Speedwire/tree/master/</url>
+    </scm>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
