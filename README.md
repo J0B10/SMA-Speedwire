@@ -64,7 +64,7 @@ Reading incoming data from an SMA Energy Meter / SMA Sunny Home Manager:
         speedwire.start();
 ```
 
-For more information read the well documented [javadoc](https://github.com/joblo2213/SMA-Speedwire/deployments/activity_log?environment=github-pages)
+For more information read the well documented [javadoc](https://joblo2213.github.io/SMA-Speedwire/io/github/joblo2213/sma/speedwire/Speedwire.html)
 or have a look at the [samples](samples/src).
 
 ## Libraries
