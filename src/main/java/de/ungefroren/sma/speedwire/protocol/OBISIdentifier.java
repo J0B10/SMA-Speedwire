@@ -8,7 +8,7 @@ import java.util.Objects;
  * They are defined in the <b>ICE 62056-61</b> standard.
  * </p><br><p>
  * Each OBIS identifier consists of the following groups:<br>
- * <strike><b>Group A</b> - specifies the medium (1 = electricity)</strike> <i>omitted</i><br>
+ * <i><b>Group A</b> - specifies the medium (1 = electricity)</i> <b>omitted</b><br>
  * <b>Group B</b> - specifies the channel (default 0)<br>
  * <b>Group C</b> - specifies the index of the physical value<br>
  * <b>Group D</b> - specifies the type of measurement<br>
