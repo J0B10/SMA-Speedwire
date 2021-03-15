@@ -3,7 +3,6 @@ package de.ungefroren.sma.speedwire;
 import de.ungefroren.sma.speedwire.protocol.telegrams.DiscoveryResponse;
 import de.ungefroren.sma.speedwire.protocol.telegrams.Telegram;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -54,7 +53,6 @@ public class Speedwire extends Thread {
     private static final String DEFAULT_GROUP = "239.12.255.254";
     private static final int DEFAULT_PORT = 9522;
     private static final int TIMEOUT = 5000;
-    private static final byte[] DISCOVERY_REQUEST = DatatypeConverter.parseHexBinary("534d4100000402a0ffffffff0000002000000000");
 
     private final InetAddress hostAddress;
     private final InetAddress multicastGroup;
@@ -193,7 +191,14 @@ public class Speedwire extends Thread {
      * </p>
      */
     public void sendDiscoveryRequest() {
-        send(DISCOVERY_REQUEST);
+        byte[] discoveryRequest = new byte[]{
+                (byte) 0x53, (byte) 0x4d, (byte) 0x41, (byte) 0x00,
+                (byte) 0x00, (byte) 0x04, (byte) 0x02, (byte) 0xa0,
+                (byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x20,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00
+        };
+        send(discoveryRequest);
     }
 
     /**

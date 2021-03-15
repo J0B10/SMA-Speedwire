@@ -3,7 +3,6 @@ package de.ungefroren.sma.speedwire.protocol.telegrams;
 import de.ungefroren.sma.speedwire.Speedwire;
 import de.ungefroren.sma.speedwire.protocol.InvalidTelegramException;
 
-import javax.xml.bind.DatatypeConverter;
 import java.net.InetAddress;
 import java.util.Arrays;
 
@@ -13,7 +12,13 @@ import java.util.Arrays;
  */
 public class DiscoveryResponse extends Telegram {
 
-    private static final byte[] SUBARRAY = DatatypeConverter.parseHexBinary("534d4100000402A000000001000200000001");
+    private static final byte[] SUBARRAY = new byte[]{
+            (byte) 0x53, (byte) 0x4d, (byte) 0x41, (byte) 0x00,
+            (byte) 0x00, (byte) 0x04, (byte) 0x02, (byte) 0xA0,
+            (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01,
+            (byte) 0x00, (byte) 0x02, (byte) 0x00, (byte) 0x00,
+            (byte) 0x00, (byte) 0x01
+    };
 
     DiscoveryResponse(InetAddress origin, byte[] data) throws InvalidTelegramException {
         super(origin, data);
