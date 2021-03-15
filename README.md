@@ -65,3 +65,9 @@ Reading incoming data from an SMA Energy Meter / SMA Sunny Home Manager:
 ```
 
 For more information read the well documented javadoc or have a look at the [samples](samples/src).
+
+## Libraries
+These open source libraries were used to create this api:
+
+*  [unitsofmeasurement/indriya](https://github.com/unitsofmeasurement/indriya) licensed under the following
+   [license](https://github.com/unitsofmeasurement/indriya/blob/master/LICENSE)
