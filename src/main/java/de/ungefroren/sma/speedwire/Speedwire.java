@@ -13,6 +13,28 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+/**
+ * <p>
+ * Main class for interacting with speedwire devices.
+ * </p><br><p>
+ * All devices that use the speedwire protocol send data periodically via
+ * <a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol">UDP</a>
+ * <a href="https://en.wikipedia.org/wiki/Multicast">Multicast</a>, by default to group {@code 239.12.255.254}
+ * on port {@code 9522}.
+ * </p><br><p>
+ * To join the multicast group and listen for incoming data call the {@code start()} method.<br>
+ * The thread will read all incoming data and parse the telegrams.<br>
+ * Register callbacks that receive the parsed telegrams from the thread by using {@code onData()}.<br>
+ * Callbacks that handle occurring errors or timeouts can also be registered but aren't mandatory.<br>
+ * </p><br><p>
+ * <b>Example:</b>
+ * <pre>{@code
+ * Speedwire sw = new Speedwire();
+ * sw.onData(() -> System.out.println(data));
+ * sw.start;
+ * }</pre>
+ * </p>
+ */
 public class Speedwire extends Thread {
 
     private static final String DEFAULT_GROUP = "239.12.255.254";
@@ -91,7 +113,7 @@ public class Speedwire extends Thread {
             socket.setSoTimeout(TIMEOUT);
             super.start();
         } catch (IOException e) {
-            System.err.println("Could not star Speedwire: " + e.getMessage());
+            System.err.println("Could not start Speedwire: " + e.getMessage());
             e.printStackTrace();
             if (socket != null) socket.close();
         }
