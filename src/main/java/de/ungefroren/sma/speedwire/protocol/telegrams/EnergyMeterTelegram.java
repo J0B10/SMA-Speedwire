@@ -2,6 +2,7 @@ package de.ungefroren.sma.speedwire.protocol.telegrams;
 
 import de.ungefroren.sma.speedwire.protocol.InvalidTelegramException;
 import de.ungefroren.sma.speedwire.protocol.OBISIdentifier;
+import de.ungefroren.sma.speedwire.protocol.measuringChannels.EnergyMeterChannels;
 import de.ungefroren.sma.speedwire.protocol.measuringChannels.MeasuringChannel;
 import tech.units.indriya.quantity.Quantities;
 
@@ -11,8 +12,12 @@ import java.math.BigInteger;
 import java.net.InetAddress;
 import java.util.HashMap;
 
-import static de.ungefroren.sma.speedwire.protocol.measuringChannels.EnergyMeterChannels.*;
+import static de.ungefroren.sma.speedwire.protocol.measuringChannels.EnergyMeterChannels.ALL;
+import static de.ungefroren.sma.speedwire.protocol.measuringChannels.EnergyMeterChannels.UNIT_TIME;
 
+/**
+ * A telegram from an SMA Energy Meter or an SMA Sunny Home Manager (2.0)
+ */
 public class EnergyMeterTelegram extends Telegram {
 
     private final int SUSyID;
@@ -58,21 +63,26 @@ public class EnergyMeterTelegram extends Telegram {
         for (int offset = from; offset < to; ) {
             OBISIdentifier identifier = new OBISIdentifier(getBytes(offset, 4));
 
-            if (identifier.equals(new OBISIdentifier(144, 0,0,0))) {
+            if (identifier.equals(new OBISIdentifier(144, 0, 0, 0))) {
                 int major = getUnsigned(offset + 4);
                 int minor = getUnsigned(offset + 5);
                 int patch = getUnsigned(offset + 6);
                 char revision = (char) getByte(offset + 7);
-                softwareVersion =  major + "." + minor + "." + patch + "." + revision;
+                softwareVersion = major + "." + minor + "." + patch + "." + revision;
                 offset += 8;
                 continue;
             }
 
             BigInteger value;
             switch (identifier.getDataLength()) {
-                case 4: value = get4ByteUnsignedInt(offset + 4); break;
-                case 8: value = get8ByteUnsignedInt(offset + 4); break;
-                default: throw new InvalidTelegramException("invalid identifier (unknown type): " + identifier);
+                case 4:
+                    value = get4ByteUnsignedInt(offset + 4);
+                    break;
+                case 8:
+                    value = get8ByteUnsignedInt(offset + 4);
+                    break;
+                default:
+                    throw new InvalidTelegramException("invalid identifier (unknown type): " + identifier);
             }
             measuredData.put(identifier, value);
             offset += 4 + identifier.getDataLength();
@@ -86,22 +96,53 @@ public class EnergyMeterTelegram extends Telegram {
         }
     }
 
+    /**
+     * <p>
+     * Returns the devices SUSy ID.
+     * </p><br><p>
+     * The SUSy ID is a 2 byte long (unsigned) identifier of SMA hardware, located in the first two bytes of a devices
+     * SMA device address.
+     * </p>
+     */
     public int getSUSyID() {
         return SUSyID;
     }
 
+    /**
+     * Returns the devices serial number (4 byte unsigned integer)
+     */
     public BigInteger getSerNo() {
         return serNo;
     }
 
+    /**
+     * Returns the measuring time of the data provided by the telegram.<br>
+     * This 4 byte unsigned integer with ms precision will overflow approximately every 50 days and start again at 0.
+     */
     public Quantity<Time> getMeasuringTime() {
         return measuringTime;
     }
 
+    /**
+     * <p>
+     * Returns the software version string of the smart meter
+     * </p><br><p>
+     * Syntax:<br>
+     * <center><b>Major.Minor.Build.Revision</b></center><br>
+     * </p>
+     */
     public String getSoftwareVersion() {
         return softwareVersion;
     }
 
+    /**
+     * Retrieves measured data of a given channel from the telegram<br>
+     * A list of all valid channels can be found in {@link EnergyMeterChannels}.
+     *
+     * @param channel channel of the data that should be retrieved
+     * @return the measured data of the given channel as quantity
+     * @throws IllegalArgumentException if the telegram does not contain valid data for the given channel
+     */
     public <Q extends Quantity<Q>> Quantity<Q> getData(MeasuringChannel<Q> channel) throws IllegalArgumentException {
         BigInteger value = measuredData.get(channel.getIdentifier());
         if (value == null) throw new IllegalArgumentException("channel '" + channel + "' is not defined");

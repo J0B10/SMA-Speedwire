@@ -18,17 +18,59 @@ import java.util.List;
 
 public interface EnergyMeterChannels {
 
+    /**
+     * The Energy Meter provides power values in [0.1W]
+     */
     Unit<Power> UNIT_POWER = Units.WATT.multiply(0.1);
+
+    /**
+     * The Energy Meter provides energy values in [Ws]
+     */
     Unit<Energy> UNIT_ENERGY = Units.WATT.multiply(Units.SECOND).asType(Energy.class);
+
+    /**
+     * The Energy Meter provides electric current values in [mA]
+     */
     Unit<ElectricCurrent> UNIT_CURRENT = MetricPrefix.MILLI(Units.AMPERE);
+
+    /**
+     * The Energy Meter provides voltage values in [mV]
+     */
     Unit<ElectricPotential> UNIT_VOLTAGE = MetricPrefix.MILLI(Units.VOLT);
+
+    /**
+     * The Energy Meter provides power factor values [cos(φ)] without unit, multiplied by 0.001
+     */
     Unit<Dimensionless> UNIT_FACTOR = AbstractUnit.ONE.multiply(0.001);
+
+    /**
+     * The Energy Meter provides time measurements in [ms]
+     */
     Unit<Time> UNIT_TIME = MetricPrefix.MILLI(Units.SECOND);
+
+    /**
+     * The Energy Meter provides time measurements in [0.001 Hz]
+     */
     Unit<Frequency> UNIT_FREQUENCY = Units.HERTZ.multiply(0.001);
 
+    /**
+     * <b>OBIS 0:1.4.0</b> - current total ingress power in [0.1W]
+     */
     MeasuringChannel<Power> TOTAL_P_IN = new MeasuringChannel<>(1, 4, 0, "current total ingress power", UNIT_POWER);
+
+    /**
+     * <b>OBIS 0:1.8.0</b> - total ingress energy sum in [Ws]
+     */
     MeasuringChannel<Energy> TOTAL_P_IN_SUM = new MeasuringChannel<>(1, 8, 0, "total ingress energy sum", UNIT_ENERGY);
+
+    /**
+     * <b>OBIS 0:2.4.0</b> - current total egress power in [0.1W]
+     */
     MeasuringChannel<Power> TOTAL_P_OUT = new MeasuringChannel<>(2, 4, 0, "current total egress power", UNIT_POWER);
+
+    /**
+     * <b>OBIS 0:2.8.0</b> - total egress energy sum in [Ws]
+     */
     MeasuringChannel<Energy> TOTAL_P_OUT_SUM = new MeasuringChannel<>(2, 8, 0, "total egress energy sum", UNIT_ENERGY);
 
     MeasuringChannel<Power> TOTAL_Q_IN = new MeasuringChannel<>(3, 4, 0, "current total ingress reactive power", UNIT_POWER);
@@ -101,6 +143,9 @@ public interface EnergyMeterChannels {
     MeasuringChannel<ElectricPotential> L3_VOLTAGE = new MeasuringChannel<>(72, 4, 0, "current phase 3 electric voltage", UNIT_VOLTAGE);
     MeasuringChannel<Dimensionless> L3_POWER_FACTOR = new MeasuringChannel<>(73, 4, 0, "current phase 3 power factor", UNIT_FACTOR);
 
+    /**
+     * This list contains all channels in provided by the energy meter telegram
+     */
     List<MeasuringChannel<?>> ALL = List.of(
             TOTAL_P_IN, TOTAL_P_OUT, TOTAL_Q_IN, TOTAL_Q_OUT, TOTAL_S_IN, TOTAL_S_OUT, TOTAL_P_IN_SUM, TOTAL_P_OUT_SUM,
             TOTAL_Q_IN_SUM, TOTAL_Q_OUT_SUM, TOTAL_S_IN_SUM, TOTAL_S_OUT_SUM, TOTAL_POWER_FACTOR, NET_FREQUENCY,

@@ -9,7 +9,12 @@ import javax.measure.quantity.Energy;
 import javax.measure.quantity.Power;
 import java.io.IOException;
 
+/**
+ * This sample demonstrates how to log the current power draw and the total energy reading of a SMA Energy Meter.<br>
+ * Data from other channels of the Energy Meter can be retrieved the same way.
+ */
 public class EnergyMeterSample {
+
     public static void main(String[] args) throws IOException {
         Speedwire speedwire = new Speedwire();
         speedwire.onError(Exception::printStackTrace);
