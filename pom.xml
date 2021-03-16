@@ -22,6 +22,20 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <id>joblo2213</id>
+            <name>Jonas Blocher</name>
+            <url>https://github.com/joblo2213/</url>
+            <timezone>Europe/Berlin</timezone>
+            <properties>
+                <picUrl>
+                    https://avatars.githubusercontent.com/u/17405009?s=400&amp;u=0aae6711b8e01a56acc71ebab32b83f4ce3b569e&amp;v=4
+                </picUrl>
+            </properties>
+        </developer>
+    </developers>
+
     <scm>
         <connection>scm:git:git://github.com/joblo2213/SMA-Speedwire.git</connection>
         <developerConnection>scm:git:ssh://github.com:joblo2213/SMA-Speedwire.git</developerConnection>
@@ -31,6 +45,7 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -42,7 +57,7 @@
     </dependencies>
 
     <build>
-        <finalName>SMA-Speedwire-${version}</finalName>
+        <finalName>SMA-Speedwire-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -50,6 +65,15 @@
                 <version>3.8.1</version>
                 <configuration>
                     <release>11</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.2.0</version>
+                <configuration>
+                    <xmlOutput>true</xmlOutput>
+                    <failOnError>false</failOnError>
                 </configuration>
             </plugin>
             <plugin>
@@ -66,6 +90,22 @@
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <minimizeJar>true</minimizeJar>
+                            <filters>
+                                <filter>
+                                    <artifact>javax.*:*</artifact>
+                                    <excludes>
+                                        <exclude>module-info.class</exclude>
+                                        <exclude>META-INF/**</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>tech.*:*</artifact>
+                                    <excludes>
+                                        <exclude>module-info.class</exclude>
+                                        <exclude>META-INF/**</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>
