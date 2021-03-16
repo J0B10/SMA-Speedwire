@@ -1,4 +1,7 @@
 # SMA-Speedwire
+_This library is not affiliated, associated, authorized, endorsed by, or in any way officially connected with 
+SMA Solar Technology AG, or any of its subsidiaries or its affiliates._
+
 SMA-Speedwire is an api for communicating with SMA products over Ethernet using the speedwire interface.  
 
 It allows listening for exchanged data between your devices and logging meter readings.
