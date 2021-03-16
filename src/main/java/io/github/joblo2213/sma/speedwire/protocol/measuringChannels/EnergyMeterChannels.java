@@ -15,7 +15,10 @@ import javax.measure.quantity.Power;
 import javax.measure.quantity.Time;
 import java.util.List;
 
-
+/**
+ * This interface provides a collection of all measuring channels supported by SMA Energy Meters and
+ * SMA Sunny Home Manager (2.0), as well as the units of the measurements.
+ */
 public interface EnergyMeterChannels {
 
     /**
@@ -49,7 +52,7 @@ public interface EnergyMeterChannels {
     Unit<Time> UNIT_TIME = MetricPrefix.MILLI(Units.SECOND);
 
     /**
-     * The Energy Meter provides time measurements in [0.001 Hz]
+     * The Energy Meter provides frequency measurements in [0.001 Hz]
      */
     Unit<Frequency> UNIT_FREQUENCY = Units.HERTZ.multiply(0.001);
 
@@ -144,7 +147,7 @@ public interface EnergyMeterChannels {
     MeasuringChannel<Dimensionless> L3_POWER_FACTOR = new MeasuringChannel<>(73, 4, 0, "current phase 3 power factor", UNIT_FACTOR);
 
     /**
-     * This list contains all channels in provided by the energy meter telegram
+     * This list contains all channels provided by the energy meter telegram
      */
     List<MeasuringChannel<?>> ALL = List.of(
             TOTAL_P_IN, TOTAL_P_OUT, TOTAL_Q_IN, TOTAL_Q_OUT, TOTAL_S_IN, TOTAL_S_OUT, TOTAL_P_IN_SUM, TOTAL_P_OUT_SUM,
