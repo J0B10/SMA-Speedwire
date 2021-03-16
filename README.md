@@ -76,6 +76,17 @@ Reading incoming data from an SMA Energy Meter / SMA Sunny Home Manager:
 For more information read the well documented [javadoc](https://joblo2213.github.io/SMA-Speedwire/io/github/joblo2213/sma/speedwire/Speedwire.html)
 or have a look at the [samples](samples/src).
 
+## Maven configuration
+This library is available on maven central, just add the following to your dependencies:
+
+````xml
+<dependency>
+    <groupId>io.github.joblo2213</groupId>
+    <artifactId>sma.speedwire</artifactId>
+    <version>1.0.1</version>
+</dependency>
+````
+
 ## Libraries
 These open source libraries were used to create this api:
 
