@@ -1,4 +1,10 @@
 # SMA-Speedwire
+![Java Version](https://img.shields.io/badge/java-1.11-red)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.joblo2213/sma.speedwire)](https://search.maven.org/artifact/io.github.joblo2213/sma.speedwire)
+[![Javadoc](https://img.shields.io/badge/%F0%9F%93%96-javadoc-%23F8981D)](https://joblo2213.github.io/SMA-Speedwire/io/github/joblo2213/sma/speedwire/Speedwire.html)
+[![GitHub](https://img.shields.io/github/license/joblo2213/SMA-Speedwire)](https://github.com/joblo2213/SMA-Speedwire/blob/master/LICENSE)
+[![🏗️ Build & Deploy](https://github.com/joblo2213/SMA-Speedwire/actions/workflows/main.yml/badge.svg)](https://github.com/joblo2213/SMA-Speedwire/actions/workflows/main.yml)
+
 _This library is not affiliated, associated, authorized, endorsed by, or in any way officially connected with 
 SMA Solar Technology AG, or any of its subsidiaries or its affiliates._
 
