@@ -6,7 +6,7 @@
 
     <groupId>io.github.joblo2213</groupId>
     <artifactId>sma.speedwire</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <name>SMA-Speedwire</name>
     <description>SMA-Speedwire is an api for communicating with SMA products over Ethernet using the speedwire
