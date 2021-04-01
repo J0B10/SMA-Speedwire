@@ -6,14 +6,15 @@ import java.util.Objects;
  * <p>
  * OBIS identifiers are used to identify measurement values in a telegram.<br>
  * They are defined in the <b>ICE 62056-61</b> standard.
- * </p><br><p>
+ * </p><p>
  * Each OBIS identifier consists of the following groups:<br>
- * <i><b>Group A</b> - specifies the medium (1 = electricity)</i> <b>omitted</b><br>
- * <b>Group B</b> - specifies the channel (default 0)<br>
- * <b>Group C</b> - specifies the index of the physical value<br>
- * <b>Group D</b> - specifies the type of measurement<br>
- * <b>Group E</b> - specifies the tariff (default 0)<br>
- * </p>
+ * <ul>
+ *     <li><i><b>Group A</b> - specifies the medium (1 = electricity)</i> <b>omitted</b></li>
+ *     <li><b>Group B</b> - specifies the channel (default 0)</li>
+ *     <li><b>Group C</b> - specifies the index of the physical value</li>
+ *     <li><b>Group D</b> - specifies the type of measurement</li>
+ *     <li><b>Group E</b> - specifies the tariff (default 0)</li>
+ * </ul></p>
  */
 public class OBISIdentifier {
 
@@ -45,7 +46,7 @@ public class OBISIdentifier {
      * <b>OBIS group B</b><br>
      * Some devices have multiple measurement channels that generate multiple measurement results for the same index.<br>
      * These devices can separate the results into different channels.
-     * </p><br><p>
+     * </p><p>
      * SMA Devices initially use channel 0 for internal measurements and can use additional channels for additional
      * connected circuits.
      * </p>
@@ -98,7 +99,7 @@ public class OBISIdentifier {
     /**
      * <p>
      * Returns the identifier as String with the syntax B:C.D.E
-     * </p><br><p>
+     * </p><p>
      * <b>Example:</b> {@code 0:14.4.0} (net frequency)
      * </p>
      */

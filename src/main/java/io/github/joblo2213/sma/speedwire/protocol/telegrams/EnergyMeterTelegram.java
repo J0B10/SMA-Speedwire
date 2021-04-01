@@ -97,7 +97,7 @@ public class EnergyMeterTelegram extends Telegram {
     /**
      * <p>
      * Returns the devices SUSy ID.
-     * </p><br><p>
+     * </p><p>
      * The SUSy ID is a 2 byte long (unsigned) identifier of SMA hardware, located in the first two bytes of a devices
      * SMA device address.
      * </p>
@@ -124,7 +124,7 @@ public class EnergyMeterTelegram extends Telegram {
     /**
      * <p>
      * Returns the software version string of the smart meter
-     * </p><br><p>
+     * </p><p>
      * Syntax:<br>
      * <center><b>Major.Minor.Build.Revision</b></center><br>
      * </p>

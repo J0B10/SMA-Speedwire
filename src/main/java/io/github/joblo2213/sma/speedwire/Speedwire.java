@@ -16,17 +16,17 @@ import java.util.concurrent.CopyOnWriteArraySet;
 /**
  * <p>
  * Main class for interacting with speedwire devices.
- * </p><br><p>
+ * </p><p>
  * All devices that use the speedwire protocol send data periodically via
  * <a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol">UDP</a>
  * <a href="https://en.wikipedia.org/wiki/Multicast">Multicast</a>, by default to group {@code 239.12.255.254}
  * on port {@code 9522}.
- * </p><br><p>
+ * </p><p>
  * To join the multicast group and listen for incoming data call the {@code start()} method.<br>
  * The thread will read all incoming data and parse the telegrams.<br>
  * Register callbacks that receive the parsed telegrams from the thread by using {@code onData()}.<br>
  * Callbacks that handle occurring errors or timeouts can also be registered but aren't mandatory.<br>
- * </p><br><p>
+ * </p><p>
  * <b>Example:</b>
  * </p><pre>{@code
  * Speedwire sw = new Speedwire();
@@ -129,7 +129,7 @@ public class Speedwire extends Thread {
      * Callbacks are allowed to be registered while the speedwire thread is running, although it is advised to register
      * them before calling {@code start()}.<br>
      * The callback will be run on the speedwire thread so avoid blocking or very slow operations.
-     * </p><br><p>
+     * </p><p>
      * <b>Note:</b><br>
      * Telegrams send from your host address will be redirected back by the multicast group and are therefore
      * filtered out. They will not trigger this callback.
@@ -183,7 +183,7 @@ public class Speedwire extends Thread {
      * Every speedwire device will answer this request with a {@link DiscoveryResponse} for which you can listen
      * using {@code onData()}.<br>
      * This allows detecting all unknown devices and determining their ip addresses by using {@link Telegram#getOrigin()}.
-     * </p><br><p>
+     * </p><p>
      * More information on speedwire device discovery can be found in
      * <a href="https://www.sma.de/fileadmin/content/global/Partner/Documents/sma_developer/SpeedwireDD-TI-en-10.pdf">
      * SpeedwireDD-TI-en-10.pdf

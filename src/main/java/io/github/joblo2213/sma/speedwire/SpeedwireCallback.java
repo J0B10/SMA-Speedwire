@@ -5,13 +5,15 @@ import io.github.joblo2213.sma.speedwire.protocol.telegrams.*;
 /**
  * <p>
  * The callback that is run on any received data packets over sma speedwire.
- * </p><br><p>
+ * </p><p>
  * If you want to listen for specific telegrams or parse special data, check if the provided data is of a
  * specific subclass of telegram.
- * </p><br><p>
+ * </p><p>
  * Currently implemented telegrams:<br>
- * {@link DiscoveryResponse}, {@link EnergyMeterTelegram}
- * </p><br><p>
+ * <ul>
+ *     <li>{@link DiscoveryResponse}</li>
+ *     <li>{@link EnergyMeterTelegram}</li>
+ * </ul></p><p>
  * <b>Example:</b>
  * <pre>{@code
  * speedwire.onData(data -> {

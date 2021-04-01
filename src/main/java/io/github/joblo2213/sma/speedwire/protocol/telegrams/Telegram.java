@@ -31,7 +31,7 @@ public class Telegram {
      * Parses the given datagram packet into a telegram<br>
      * The returned telegram will be of a specific subclass if the data from the packet matches the subclasses
      * requirements.
-     * </p><br><p>
+     * </p><p>
      * Currently implemented subclasses:<br>
      * {@link DiscoveryResponse}, {@link EnergyMeterTelegram}
      * </p>
@@ -110,7 +110,7 @@ public class Telegram {
     /**
      * <p>
      * Returns the raw value from the specified position of the telegrams data
-     * </p><br><p>
+     * </p><p>
      * <b>Telegrams contain unsigned bytes while java byte is signed.<br>
      * It's in most cases better to use {@link #getUnsigned(int)}!</b>
      * </p>
@@ -135,7 +135,7 @@ public class Telegram {
     /**
      * <p>
      * Returns an array of multiple bytes from the telegrams data
-     * </p><br><p>
+     * </p><p>
      * <b>Telegrams contain unsigned bytes while java byte is signed.<br>
      * It's in most cases better to use {@link #getUnsigned(int, int)}!</b>
      * </p>
