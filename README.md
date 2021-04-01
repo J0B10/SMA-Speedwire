@@ -83,7 +83,7 @@ This library is available on maven central, just add the following to your depen
 <dependency>
     <groupId>io.github.joblo2213</groupId>
     <artifactId>sma.speedwire</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ````
 
