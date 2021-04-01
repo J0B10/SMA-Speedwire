@@ -1,6 +1,8 @@
 package io.github.joblo2213.sma.speedwire.protocol.telegrams;
 
-import io.github.joblo2213.sma.speedwire.protocol.InvalidTelegramException;
+import io.github.joblo2213.sma.speedwire.protocol.exceptions.TelegramException;
+import io.github.joblo2213.sma.speedwire.protocol.exceptions.TelegramInvalidException;
+import io.github.joblo2213.sma.speedwire.protocol.exceptions.TelegramMismatchException;
 
 import java.math.BigInteger;
 import java.net.DatagramPacket;
@@ -18,7 +20,7 @@ public class Telegram {
     private final InetAddress origin;
     private final byte[] data;
 
-    Telegram(InetAddress origin, byte[] data) throws InvalidTelegramException {
+    Telegram(InetAddress origin, byte[] data) throws TelegramInvalidException, TelegramMismatchException {
         this.origin = origin;
         this.data = data;
         validate();
@@ -36,40 +38,43 @@ public class Telegram {
      *
      * @param packet packet that should be parsed as speedwire telegram
      * @return parsed telegram
-     * @throws InvalidTelegramException if the packet is not a valid telegram
+     * @throws TelegramInvalidException if the packet is not a valid telegram
      */
-    public static Telegram from(DatagramPacket packet) throws InvalidTelegramException {
+    public static Telegram from(DatagramPacket packet) throws TelegramInvalidException {
         byte[] data = Arrays.copyOfRange(
                 packet.getData(),
                 packet.getOffset(),
                 packet.getOffset() + packet.getLength()
         );
-        //TODO Improve handling of invalid telegram (distinguish between wrong type and defective packets)
         try {
             return new DiscoveryResponse(packet.getAddress(), data);
-        } catch (InvalidTelegramException ignored) {
+        } catch (TelegramMismatchException ignored) {
         }
         try {
             return new EnergyMeterTelegram(packet.getAddress(), data);
-        } catch (InvalidTelegramException ignored) {
+        } catch (TelegramMismatchException ignored) {
         }
-        return new Telegram(packet.getAddress(), data);
+        try {
+            return new Telegram(packet.getAddress(), data);
+        } catch (TelegramMismatchException e) {
+            throw new RuntimeException("telegram doesn't match default telegram", e); //this should never occur
+        }
     }
 
     /**
      * Validates the integrity of the telegram and throws an exception otherwise
      *
-     * @throws InvalidTelegramException if the telegram data does violate the required data format
+     * @throws TelegramInvalidException if the telegram data does violate the required data format
      */
-    protected void validate() throws InvalidTelegramException {
+    protected void validate() throws TelegramInvalidException, TelegramMismatchException {
         try {
             //check identification string
             if (!new String(getUnsigned(0, 3), 0, 3).equals("SMA") || getUnsigned(3) != 0)
-                throw new InvalidTelegramException("telegram doesn't start with id String \"S\", \"M\", \"A\", 0");
+                throw new TelegramInvalidException(this, "telegram doesn't start with id String \"S\", \"M\", \"A\", 0");
 
             //check end
             if (get2ByteUnsignedInt(length() - 4) != 0 || get2ByteUnsignedInt(length() - 2) != 0)
-                throw new InvalidTelegramException("telegram seems to be incomplete (must end with 0x00, 0x00, 0x00, 0x00)");
+                throw new TelegramInvalidException(this, "telegram seems to be incomplete (must end with 0x00, 0x00, 0x00, 0x00)");
 
         /* TODO
             Check the integrity of the given fields:
@@ -84,7 +89,7 @@ public class Telegram {
            https://www.sma.de/fileadmin/content/global/Partner/Documents/SMA_Labs/EMETER-Protokoll-TI-en-10.pdf
          */
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new InvalidTelegramException(e);
+            throw new TelegramInvalidException(this, e);
         }
     }
 
@@ -144,6 +149,20 @@ public class Telegram {
     }
 
     /**
+     * <p>
+     * Returns an array that contains a copy of the telegrams data
+     * </p><p>
+     * <b>Telegrams contain unsigned bytes while java byte is signed.<br>
+     * It's in most cases better to use {@link #getUnsigned()}!</b>
+     * </p>
+     *
+     * @return array containing the telegram data
+     */
+    public byte[] getBytes() {
+        return Arrays.copyOf(data, length());
+    }
+
+    /**
      * Returns an array of multiple unsigned bytes from the telegrams data
      *
      * @param index  index of the first byte to return
@@ -152,6 +171,15 @@ public class Telegram {
      */
     public int[] getUnsigned(int index, int length) {
         return IntStream.range(index, index + length).map(this::getUnsigned).toArray();
+    }
+
+    /**
+     * Returns an array that contains a copy of the telegrams data as unsigned bytes
+     *
+     * @return array an array containing a copy of the telegram data converted to unsigned integers
+     */
+    public int[] getUnsigned() {
+        return getUnsigned(0, length());
     }
 
     /**

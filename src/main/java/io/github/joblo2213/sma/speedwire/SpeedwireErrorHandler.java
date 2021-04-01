@@ -1,6 +1,6 @@
 package io.github.joblo2213.sma.speedwire;
 
-import io.github.joblo2213.sma.speedwire.protocol.InvalidTelegramException;
+import io.github.joblo2213.sma.speedwire.protocol.exceptions.TelegramInvalidException;
 
 import java.io.IOException;
 import java.net.PortUnreachableException;
@@ -13,7 +13,7 @@ import java.nio.channels.IllegalBlockingModeException;
  * If you want to listen for specific types of exceptions, check the type with {@code instanceof}.
  * </p><br><p>
  * Likely exceptions are:<br>
- * {@link InvalidTelegramException} - if an incoming packet can't be parsed as valid speedwire telegram
+ * {@link TelegramInvalidException} - if an incoming packet can't be parsed as valid speedwire telegram
  * {@link IOException} – if an I/O error occurs.<br>
  * {@link PortUnreachableException} –   may be thrown if the socket is connected to a currently unreachable destination.
  * Note, there is no guarantee that the exception will be thrown.<br>

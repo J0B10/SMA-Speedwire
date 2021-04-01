@@ -1,7 +1,8 @@
 package io.github.joblo2213.sma.speedwire.protocol.telegrams;
 
-import io.github.joblo2213.sma.speedwire.protocol.InvalidTelegramException;
 import io.github.joblo2213.sma.speedwire.protocol.OBISIdentifier;
+import io.github.joblo2213.sma.speedwire.protocol.exceptions.TelegramInvalidException;
+import io.github.joblo2213.sma.speedwire.protocol.exceptions.TelegramMismatchException;
 import io.github.joblo2213.sma.speedwire.protocol.measuringChannels.EnergyMeterChannels;
 import io.github.joblo2213.sma.speedwire.protocol.measuringChannels.MeasuringChannel;
 import tech.units.indriya.quantity.Quantities;
@@ -23,7 +24,7 @@ public class EnergyMeterTelegram extends Telegram {
     private final HashMap<OBISIdentifier, BigInteger> measuredData;
     private String softwareVersion = "unknown";
 
-    EnergyMeterTelegram(InetAddress origin, byte[] data) throws InvalidTelegramException {
+    EnergyMeterTelegram(InetAddress origin, byte[] data) throws TelegramInvalidException, TelegramMismatchException {
         super(origin, data);
         try {
             SUSyID = get2ByteUnsignedInt(18);
@@ -33,30 +34,30 @@ public class EnergyMeterTelegram extends Telegram {
             measuredData = new HashMap<>();
             loadMeasurements(28, length() - 4);
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new InvalidTelegramException(e);
+            throw new TelegramInvalidException(this, e);
         }
     }
 
     @Override
-    protected void validate() throws InvalidTelegramException {
+    protected void validate() throws TelegramInvalidException, TelegramMismatchException {
         super.validate();
         try {
 
             //Tag: "SMA Net 2", version 0 (0x0010) is set
             if (get2ByteUnsignedInt(14) != 0x0010)
-                throw new InvalidTelegramException("telegram doesn't contain SMA Net 2 protocol data");
+                throw new TelegramMismatchException(this, "telegram doesn't contain SMA Net 2 protocol data");
 
             //ProtocolID 0x6069 (energy meter protocol) is set
             if (get2ByteUnsignedInt(16) != 0x6069)
-                throw new InvalidTelegramException("protocol id isn't 0x6069");
+                throw new TelegramMismatchException(this, "protocol id isn't 0x6069");
 
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new InvalidTelegramException(e);
+            throw new TelegramInvalidException(this, e);
         }
     }
 
     @SuppressWarnings("SameParameterValue")
-    private void loadMeasurements(int from, int to) throws InvalidTelegramException {
+    private void loadMeasurements(int from, int to) throws TelegramInvalidException {
         for (int offset = from; offset < to; ) {
             OBISIdentifier identifier = new OBISIdentifier(getBytes(offset, 4));
 
@@ -79,7 +80,7 @@ public class EnergyMeterTelegram extends Telegram {
                     value = get8ByteUnsignedInt(offset + 4);
                     break;
                 default:
-                    throw new InvalidTelegramException("invalid identifier (unknown type): " + identifier);
+                    throw new TelegramInvalidException(this, "invalid identifier (unknown type): " + identifier);
             }
             measuredData.put(identifier, value);
             offset += 4 + identifier.getDataLength();

@@ -1,7 +1,8 @@
 package io.github.joblo2213.sma.speedwire.protocol.telegrams;
 
 import io.github.joblo2213.sma.speedwire.Speedwire;
-import io.github.joblo2213.sma.speedwire.protocol.InvalidTelegramException;
+import io.github.joblo2213.sma.speedwire.protocol.exceptions.TelegramInvalidException;
+import io.github.joblo2213.sma.speedwire.protocol.exceptions.TelegramMismatchException;
 
 import java.net.InetAddress;
 import java.util.Arrays;
@@ -20,15 +21,15 @@ public class DiscoveryResponse extends Telegram {
             (byte) 0x00, (byte) 0x01
     };
 
-    DiscoveryResponse(InetAddress origin, byte[] data) throws InvalidTelegramException {
+    DiscoveryResponse(InetAddress origin, byte[] data) throws TelegramInvalidException, TelegramMismatchException {
         super(origin, data);
     }
 
     @Override
-    protected void validate() throws InvalidTelegramException {
+    protected void validate() throws TelegramInvalidException, TelegramMismatchException {
         super.validate();
         if (!Arrays.equals(getBytes(0, 18), SUBARRAY))
-            throw new InvalidTelegramException("Not a discovery response");
+            throw new TelegramMismatchException(this, "Not a discovery response");
 
     }
 }
