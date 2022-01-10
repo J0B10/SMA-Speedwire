@@ -19,9 +19,7 @@ public class EnergyMeterSample {
         Speedwire speedwire = new Speedwire();
         speedwire.onError(Exception::printStackTrace);
         speedwire.onTimeout(() -> System.err.println("speedwire timeout"));
-        speedwire.onData(data -> {
-            if (data instanceof EnergyMeterTelegram) {
-                EnergyMeterTelegram em = (EnergyMeterTelegram) data;
+        speedwire.onData(EnergyMeterTelegram.class, em -> {
 
                 //device information
                 int SUSyID = em.getSUSyID();
@@ -37,7 +35,6 @@ public class EnergyMeterSample {
                 Quantity<Energy> powerReading = em.getData(EnergyMeterChannels.TOTAL_P_IN_SUM)
                         .to(MetricPrefix.KILO(Units.WATT).multiply(Units.HOUR).asType(Energy.class));
                 System.out.printf("Total power reading: %s%n", powerReading);
-            }
         });
         speedwire.start();
     }

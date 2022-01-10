@@ -12,11 +12,9 @@ public class DeviceDiscovery {
         Speedwire speedwire = new Speedwire();
         speedwire.onError(Exception::printStackTrace);
         speedwire.onTimeout(() -> System.err.println("speedwire timeout"));
-        speedwire.onData(data -> {
-            if (data instanceof DiscoveryResponse) {
-                System.out.println("Device detected with ip " + data.getOrigin().getHostAddress());
-            }
-        });
+        speedwire.onData(DiscoveryResponse.class, data ->
+                System.out.println("Device detected with ip " + data.getOrigin().getHostAddress())
+        );
         speedwire.start();
         speedwire.sendDiscoveryRequest();
         Thread.sleep(5_000);

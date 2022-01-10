@@ -58,7 +58,7 @@ public class Speedwire extends Thread {
     private final InetAddress multicastGroup;
     private final int port;
 
-    private final CopyOnWriteArraySet<SpeedwireCallback> callbacks = new CopyOnWriteArraySet<>();
+    private final CopyOnWriteArraySet<SpeedwireCallback<Telegram>> callbacks = new CopyOnWriteArraySet<>();
     private final CopyOnWriteArraySet<SpeedwireErrorHandler> errorHandlers = new CopyOnWriteArraySet<>();
     private final CopyOnWriteArraySet<Runnable> timeoutHandlers = new CopyOnWriteArraySet<>();
 
@@ -137,8 +137,12 @@ public class Speedwire extends Thread {
      *
      * @param callback callback that listens for all incoming telegrams
      */
-    public void onData(SpeedwireCallback callback) {
+    public void onData(SpeedwireCallback<Telegram> callback) {
         callbacks.add(callback);
+    }
+
+    public <T extends Telegram> void onData(Class<T> d, SpeedwireCallback<T> callback) {
+        callbacks.add(new CallBackWrapper<>(d, callback));
     }
 
     /**
@@ -210,8 +214,10 @@ public class Speedwire extends Thread {
     public synchronized void start() {
         try {
             socket = new MulticastSocket(port);
+            //noinspection deprecation
             socket.setInterface(getLocalAddress());
             socket.setReuseAddress(true);
+            //noinspection deprecation
             socket.joinGroup(multicastGroup);
             socket.setSoTimeout(TIMEOUT);
             super.start();
@@ -279,5 +285,25 @@ public class Speedwire extends Thread {
      */
     public int getPort() {
         return port;
+    }
+
+    /**
+     * Provides a wrapper to listen only for telegrams of a specific type
+     */
+    private static class CallBackWrapper<T extends Telegram> implements SpeedwireCallback<Telegram> {
+        final Class<T> tClass;
+        final SpeedwireCallback<T> wrapped;
+
+        CallBackWrapper(Class<T> tClass, SpeedwireCallback<T> wrapped) {
+            this.tClass = tClass;
+            this.wrapped = wrapped;
+        }
+
+        @Override
+        public void onDataReceived(Telegram data) {
+            if (tClass.isInstance(data)) {
+                wrapped.onDataReceived(tClass.cast(data));
+            }
+        }
     }
 }
