@@ -28,12 +28,12 @@ jobs:
         with:
           path: '**/spotbugsXml.xml'
       - name: Upload jars as Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: SMA-Speedwire-artifacts
           path: target/SMA-Speedwire-*.jar
       - name: Upload javadoc Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: SMA-Speedwire-apidocs
           path: target/apidocs/
