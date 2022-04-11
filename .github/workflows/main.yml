@@ -50,7 +50,7 @@ jobs:
           shopt -s extglob
           rm -r !(.git)
       - name: Download javadoc Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: SMA-Speedwire-apidocs
       - name: Deploy javadoc
